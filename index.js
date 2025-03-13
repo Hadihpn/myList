@@ -1,6 +1,5 @@
 const express = require("express");
-// const mainRouter = require("./src/mainRouter");
-// const SwaggerConfig = require("./src/config/swagger.config");
+const SwaggerConfig = require("./src/config/swagger.config");
 // const cors = require("cors");
 // const {
 //   NotFoundHandler,
