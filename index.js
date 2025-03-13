@@ -8,6 +8,7 @@ const express = require("express");
 // } = require("./src/common/util/exceptionHandler");
 require("dotenv").config();
 const http = require("http");
+const {mainRouter} = require("./src/mainRouter");
 
 const app = express();
 
@@ -31,7 +32,7 @@ app.use(express.static("public"));
 
 // SwaggerConfig(app);
 
-// app.use(mainRouter);
+app.use(mainRouter);
 
 // NotFoundHandler(app);
 // AllExceptionHandler(app);
