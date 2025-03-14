@@ -1,13 +1,11 @@
 const express = require("express");
 const SwaggerConfig = require("./src/config/swagger.config");
 // const cors = require("cors");
-// const {
-//   NotFoundHandler,
-//   AllExceptionHandler,
-// } = require("./src/common/util/exceptionHandler");
+
 require("dotenv").config();
 const http = require("http");
 const {mainRouter} = require("./src/mainRouter");
+const { NotFoundHandler, AllExceptionHandler } = require("./src/utils/exceptionHandler");
 
 const app = express();
 
@@ -23,18 +21,18 @@ const app = express();
 const server = http.createServer(app);
 
 const port = process.env.PORT||3000;
-// require("./src/config/mongoos.config");
+require("./src/config/mongoose.config");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-// SwaggerConfig(app);
+SwaggerConfig(app);
 
 app.use(mainRouter);
 
-// NotFoundHandler(app);
-// AllExceptionHandler(app);
+NotFoundHandler(app);
+AllExceptionHandler(app);
 server.listen(port, "0.0.0.0", () => {
   console.log(`connected to server On :http://127.0.0.1:${port}`);
 });
