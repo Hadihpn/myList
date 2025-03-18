@@ -39,13 +39,16 @@ class UserController {
   async findById(req, res, next) {
     try {
       const { id } = req.params;
-      const user = await this.#userService.findById(id);
-      return res.status(httpStatus.OK).json({
-        statusCode: httpStatus.OK,
-        data: {
-          user,
-        },
-      });
+      if (isValidObjectId(id)) {
+        const user = await this.#userService.findById(id);
+        return res.status(httpStatus.OK).json({
+          statusCode: httpStatus.OK,
+          data: {
+            user,
+          },
+        });
+      }
+      return res.status(httpStatus.BAD_REQUEST).json({ message: "Invalid Id" });
     } catch (error) {
       next(error);
     }
