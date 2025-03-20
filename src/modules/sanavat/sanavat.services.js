@@ -31,7 +31,7 @@ class SanavatServices {
     return result;
   }
   async updatePrice(oldPrice, newPrice) {
-    const result = await this.#sanavatModel.updateMany(
+    const result = await this.#sanavatModel.updateOne(
       { dailySanavat: oldPrice },
       { $set: { dailySanavat: newPrice } }
     );

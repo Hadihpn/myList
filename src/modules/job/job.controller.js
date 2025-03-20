@@ -25,8 +25,6 @@ class JobController {
   }
   async getAll(req, res, next) {
     try {
-      console.log(("get all"));
-      
       const jobs = await this.#jobService.getAll();
       return res.status(httpStatus.OK).json({
         statusCode: httpStatus.OK,
@@ -74,7 +72,7 @@ class JobController {
       const { id } = req.params;
       if (isValidObjectId(id)) {
         const result = await this.#jobService.delete(id);
-        if (!karfarma)
+        if (!result)
           throw { statusCode: 404, message: "شغلی با این شناسه یافت نشد" };
   
         return res.status(httpStatus.OK).json({
@@ -83,6 +81,23 @@ class JobController {
         });
       }
       return res.status(httpStatus.BAD_REQUEST).json({ message: "Invalid Id" });
+    } catch (error) {
+      next(error);
+    }
+  }
+  async update(req, res, next) {
+    try {
+      const { id } = req.params;
+      if (isValidObjectId(id)) {
+        await createJobSchema.validateAsync(req.body);
+        const job = await this.#jobService.update(id, req.body);
+        return res.status(httpStatus.OK).json({
+          statusCode: httpStatus.OK,
+          data: {
+            job
+          },
+        });
+      }
     } catch (error) {
       next(error);
     }

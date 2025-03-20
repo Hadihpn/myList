@@ -1,22 +1,22 @@
 const autoBind = require("auto-bind");
 const { StatusCodes: httpStatus } = require("http-status-codes");
-const  SanavatServices  = require("./sanavat.services");
-const { createJobSchema } = require("../../common/validator/job.schema");
+const SanavatServices = require("./sanavat.services");
+const { SanavatSchema } = require("../../common/validator/sanavat.schema");
 const { isValidObjectId } = require("mongoose");
-class JobController {
-  #jobService;
+class Sanavatontroller {
+  #sanavatServices;
   constructor() {
     autoBind(this);
-    this.#jobService = JobServices;
+    this.#sanavatServices = SanavatServices;
   }
   async create(req, res, next) {
     try {
-      await createJobSchema.validateAsync(req.body);
-      const job = await this.#jobService.create(req.body);
+      await SanavatSchema.validateAsync(req.body);
+      const sanavat = await this.#sanavatServices.create(req.body);
       return res.status(httpStatus.CREATED).json({
         statusCode: httpStatus.CREATED,
         data: {
-          job,
+          sanavat,
         },
       });
     } catch (error) {
@@ -25,27 +25,25 @@ class JobController {
   }
   async getAll(req, res, next) {
     try {
-      console.log(("get all"));
-      
-      const jobs = await this.#jobService.getAll();
+      const sanavats = await this.#sanavatServices.getAll();
       return res.status(httpStatus.OK).json({
         statusCode: httpStatus.OK,
         data: {
-          jobs,
+          sanavats,
         },
       });
     } catch (error) {
       next(error);
     }
   }
-  async getByTitle(req, res, next) {
+  async getByYear(req, res, next) {
     try {
-      const { title } = req.params;
-      const job = await this.#jobService.getByTitle(title);
+      const { year } = req.params;
+      const sanavat = await this.#sanavatServices.getByTitle(parseInt(year));
       return res.status(httpStatus.OK).json({
         statusCode: httpStatus.OK,
         data: {
-          job,
+          sanavat,
         },
       });
     } catch (error) {
@@ -56,11 +54,11 @@ class JobController {
     try {
       const { id } = req.params;
       if (isValidObjectId(id)) {
-        const job = await this.#jobService.getById(id);
+        const sanavat = await this.#sanavatServices.getById(id);
         return res.status(httpStatus.OK).json({
           statusCode: httpStatus.OK,
           data: {
-            job,
+            sanavat,
           },
         });
       }
@@ -73,10 +71,10 @@ class JobController {
     try {
       const { id } = req.params;
       if (isValidObjectId(id)) {
-        const result = await this.#jobService.delete(id);
-        if (!karfarma)
+        const result = await this.#sanavatServices.delete(id);
+        if (!result)
           throw { statusCode: 404, message: "شغلی با این شناسه یافت نشد" };
-  
+
         return res.status(httpStatus.OK).json({
           statusCode: 200,
           message: "شغل با موفقیت حذف شد.",
@@ -87,19 +85,39 @@ class JobController {
       next(error);
     }
   }
-   async updatePrice(req, res, next) {
-      try {
-        const { oldPrice, newPrice } = req.body;
-        const job = await this.#jobService.updatePrice(oldPrice, newPrice);
+  async updatePrice(req, res, next) {
+    try {
+      const { oldPrice, newPrice } = req.body;
+      const sanavat = await this.#sanavatServices.updatePrice(
+        oldPrice,
+        newPrice
+      );
+      return res.status(httpStatus.OK).json({
+        statusCode: httpStatus.OK,
+        data: {
+          sanavat,
+        },
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+  async update(req, res, next) {
+    try {
+      const { id } = req.params;
+      if (isValidObjectId(id)) {
+        await SanavatSchema.validateAsync(req.body);
+        const sanavat = await this.#sanavatServices.update(id, req.body);
         return res.status(httpStatus.OK).json({
           statusCode: httpStatus.OK,
           data: {
-            job,
+            sanavat,
           },
         });
-      } catch (error) {
-        next(error);
       }
+    } catch (error) {
+      next(error);
     }
+  }
 }
-module.exports = new JobController()
+module.exports = new Sanavatontroller();
