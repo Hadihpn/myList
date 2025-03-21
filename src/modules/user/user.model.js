@@ -10,6 +10,7 @@ const UserSchema = new Schema(
     bornCity: { type: String },
     generateCity: { type: String },
     sex: { type: Boolean, default: false },
+    isMarried: { type: Boolean, default: false },
   },
   {
     timestamps: true,

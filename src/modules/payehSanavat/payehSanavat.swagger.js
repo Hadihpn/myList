@@ -2,7 +2,7 @@
  * @swagger
  * components:
  *   schemas:
- *     SanavatInput:
+ *     PayehSanavatInput:
  *       type: object
  *       required:
  *         - year
@@ -10,18 +10,18 @@
  *         year:
  *           type: number
  *           description: The sanavat year
- *         monthlySanavat:
+ *         dailySanavat:
  *           type: number
- *           description: Price for the monthlySanavat
- *     SanavatUpdateInput:
+ *           description: Price for the dailySanavat 
+ *     PayehSanavatUpdateInput:
  *       type: object
  *       properties:
  *         year:
  *           type: number
  *           description: The sanavat year
- *         monthlySanavat:
+ *         dailySanavat:
  *           type: number
- *           description: Price for the monthlySanavat
+ *           description: Price for the dailySanavat
  *     PriceUpdateInput:
  *       type: object
  *       required:
@@ -39,28 +39,28 @@
 /**
  * @swagger
  * tags:
- *   name: Sanavat
- *   description: Sanavat management API
+ *   name: PayehSanavat
+ *   description: PayehSanavat management API
  */
 
 /**
  * @swagger
- * /sanavat/create:
+ * /payehsanavat/create:
  *   post:
- *     summary: Create a new Sanavat record
- *     tags: [Sanavat]
+ *     summary: Create a new payehSanavat record
+ *     tags: [PayehSanavat]
  *     requestBody:
  *       required: true
  *       content:
  *         application/x-www-form-urlencoded:
  *            schema:
- *              $ref: '#/components/schemas/SanavatInput'
+ *              $ref: '#/components/schemas/PayehSanavatInput'
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/SanavatInput'
+ *             $ref: '#/components/schemas/PayehSanavatInput'
  *     responses:
  *       201:
- *         description: Successfully created sanavat record
+ *         description: Successfully created payehSanavat record
  *       400:
  *         description: Bad request
  *       500:
@@ -69,98 +69,98 @@
 
 /**
  * @swagger
- * /sanavat/getAll:
+ * /payehsanavat/getAll:
  *   get:
- *     summary: Retrieve all sanavat records
- *     tags: [Sanavat]
+ *     summary: Retrieve all payehSanavat records
+ *     tags: [PayehSanavat]
  *     responses:
  *       200:
- *         description: List of all sanavat records
+ *         description: List of all payehSanavat records
  *       500:
  *         description: Server error
  */
 
 /**
  * @swagger
- * /sanavat/getByYear/{year}:
+ * /payehsanavat/getByYear/{year}:
  *   get:
- *     summary: Get sanavat record by year
- *     tags: [Sanavat]
+ *     summary: Get payehSanavat record by year
+ *     tags: [PayehSanavat]
  *     parameters:
  *       - in: path
  *         name: year
  *         schema:
  *           type: number
  *         required: true
- *         description: Year of the sanavat record
+ *         description: Year of the payehSanavat record
  *     responses:
  *       200:
- *         description: sanavat record for the specified year
+ *         description: payehSanavat record for the specified year
  *       404:
- *         description: sanavat record not found
+ *         description: payehSanavat record not found
  *       500:
  *         description: Server error
  */
 
 /**
  * @swagger
- * /sanavat/getById/{id}:
+ * /payehsanavat/getById/{id}:
  *   get:
- *     summary: Get sanavat record by ID
- *     tags: [Sanavat]
+ *     summary: Get payehSanavat record by ID
+ *     tags: [PayehSanavat]
  *     parameters:
  *       - in: path
  *         name: id
  *         schema:
  *           type: string
  *         required: true
- *         description: ID of the sanavat record
+ *         description: ID of the payehSanavat record
  *     responses:
  *       200:
- *         description: sanavat record for the specified ID
+ *         description: payehSanavat record for the specified ID
  *       404:
- *         description: sanavat record not found
+ *         description: payehSanavat record not found
  *       500:
  *         description: Server error
  */
 
 /**
  * @swagger
- * /sanavat/update/{id}:
+ * /payehsanavat/update/{id}:
  *   patch:
- *     summary: Update a sanavat record
- *     tags: [Sanavat]
+ *     summary: Update a payehSanavat record
+ *     tags: [PayehSanavat]
  *     parameters:
  *       - in: path
  *         name: id
  *         schema:
  *           type: string
  *         required: true
- *         description: ID of the sanavat record to update
+ *         description: ID of the payehSanavat record to update
  *     requestBody:
  *       required: true
  *       content:
  *         application/x-www-form-urlencoded:
  *            schema:
- *              $ref: '#/components/schemas/SanavatUpdateInput'
+ *              $ref: '#/components/schemas/PayehSanavatUpdateInput' 
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/SanavatUpdateInput'
+ *             $ref: '#/components/schemas/PayehSanavatUpdateInput'
  *     responses:
  *       200:
- *         description: Successfully updated sanavat record
+ *         description: Successfully updated payehSanavat record
  *       404:
- *         description: sanavat record not found
+ *         description: payehSanavat record not found
  *       500:
  *         description: Server error
  */
 
 /**
  * @swagger
- * /sanavat/updatePrice:
+ * /payehsanavat/updatePrice:
  *   patch:
  *     summary: Update price for sanavat records
- *     tags: [Sanavat]
+ *     tags: [PayehSanavat]
  *     requestBody:
  *       required: true
  *       content:
@@ -181,22 +181,22 @@
 
 /**
  * @swagger
- * /sanavat/delete/{id}:
+ * /payehsanavat/delete/{id}:
  *   delete:
- *     summary: Delete a sanavat record
- *     tags: [Sanavat]
+ *     summary: Delete a payehSanavat record
+ *     tags: [PayehSanavat]
  *     parameters:
  *       - in: path
  *         name: id
  *         schema:
  *           type: string
  *         required: true
- *         description: ID of the sanavat record to delete
+ *         description: ID of the payehSanavat record to delete
  *     responses:
  *       200:
- *         description: Successfully deleted sanavat record
+ *         description: Successfully deleted payehSanavat record
  *       404:
- *         description: sanavat record not found
+ *         description: payehSanavat record not found
  *       500:
  *         description: Server error
  */

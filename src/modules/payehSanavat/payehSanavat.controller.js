@@ -1,18 +1,18 @@
 const autoBind = require("auto-bind");
 const { StatusCodes: httpStatus } = require("http-status-codes");
-const SanavatServices = require("./sanavat.services");
-const { SanavatSchema } = require("../../common/validator/sanavat.schema");
+const PayehSanavatServices = require("./payehSanavat.services");
 const { isValidObjectId } = require("mongoose");
-class Sanavatontroller {
-  #sanavatServices;
+const { PayehSanavatSchema } = require("../../common/validator/payehSanavat.schema");
+class PayehSanavatontroller {
+  #payehSanavatServices;
   constructor() {
     autoBind(this);
-    this.#sanavatServices = SanavatServices;
+    this.#payehSanavatServices = PayehSanavatServices;
   }
   async create(req, res, next) {
     try {
-      await SanavatSchema.validateAsync(req.body);
-      const sanavat = await this.#sanavatServices.create(req.body);
+      await PayehSanavatSchema.validateAsync(req.body);
+      const sanavat = await this.#payehSanavatServices.create(req.body);
       return res.status(httpStatus.CREATED).json({
         statusCode: httpStatus.CREATED,
         data: {
@@ -25,7 +25,7 @@ class Sanavatontroller {
   }
   async getAll(req, res, next) {
     try {
-      const sanavats = await this.#sanavatServices.getAll();
+      const sanavats = await this.#payehSanavatServices.getAll();
       return res.status(httpStatus.OK).json({
         statusCode: httpStatus.OK,
         data: {
@@ -39,7 +39,7 @@ class Sanavatontroller {
   async getByYear(req, res, next) {
     try {
       const { year } = req.params;
-      const sanavat = await this.#sanavatServices.getByYear(parseInt(year));
+      const sanavat = await this.#payehSanavatServices.getByYear(parseInt(year));
       return res.status(httpStatus.OK).json({
         statusCode: httpStatus.OK,
         data: {
@@ -54,7 +54,7 @@ class Sanavatontroller {
     try {
       const { id } = req.params;
       if (isValidObjectId(id)) {
-        const sanavat = await this.#sanavatServices.getById(id);
+        const sanavat = await this.#payehSanavatServices.getById(id);
         return res.status(httpStatus.OK).json({
           statusCode: httpStatus.OK,
           data: {
@@ -71,13 +71,13 @@ class Sanavatontroller {
     try {
       const { id } = req.params;
       if (isValidObjectId(id)) {
-        const result = await this.#sanavatServices.delete(id);
+        const result = await this.#payehSanavatServices.delete(id);
         if (!result)
-          throw { statusCode: 404, message: "سنوات با این شناسه یافت نشد" };
+          throw { statusCode: 404, message: "پایه سنواتی با این شناسه یافت نشد" };
 
         return res.status(httpStatus.OK).json({
           statusCode: 200,
-          message: "سنوات با موفقیت حذف شد.",
+          message: "پایه سنواتی با موفقیت حذف شد.",
         });
       }
       return res.status(httpStatus.BAD_REQUEST).json({ message: "Invalid Id" });
@@ -88,7 +88,7 @@ class Sanavatontroller {
   async updatePrice(req, res, next) {
     try {
       const { oldPrice, newPrice } = req.body;
-      const sanavat = await this.#sanavatServices.updatePrice(
+      const sanavat = await this.#payehSanavatServices.updatePrice(
         oldPrice,
         newPrice
       );
@@ -106,8 +106,8 @@ class Sanavatontroller {
     try {
       const { id } = req.params;
       if (isValidObjectId(id)) {
-        await SanavatSchema.validateAsync(req.body);
-        const sanavat = await this.#sanavatServices.update(id, req.body);
+        await PayehSanavatSchema.validateAsync(req.body);
+        const sanavat = await this.#payehSanavatServices.update(id, req.body);
         return res.status(httpStatus.OK).json({
           statusCode: httpStatus.OK,
           data: {
@@ -120,4 +120,4 @@ class Sanavatontroller {
     }
   }
 }
-module.exports = new Sanavatontroller();
+module.exports = new PayehSanavatontroller();

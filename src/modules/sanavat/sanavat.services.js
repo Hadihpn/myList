@@ -11,15 +11,15 @@ class SanavatServices {
     return result;
   }
   async getAll() {
-    const result = await this.#sanavatModel.find({});
+    const result = await this.#sanavatModel.find({}, { year: 1, monthlySanavat: 1, _id: 1 });
     return result;
   }
   async getByYear(year) {
-    const result = await this.#sanavatModel.findOne({ year });
+    const result = await this.#sanavatModel.findOne({ year }, { year: 1, monthlySanavat: 1, _id: 1 });
     return result;
   }
   async getById(id) {
-    const result = await this.#sanavatModel.findOne({ _id: id });
+    const result = await this.#sanavatModel.findOne({ _id: id }, { year: 1, monthlySanavat: 1, _id: 1 });
     return result;
   }
   async delete(id) {

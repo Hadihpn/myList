@@ -1,13 +1,13 @@
-const SanavatController = require("./sanavat.controller");
+const sanavatController = require("./sanavat.controller");
 
 const router = require("express").Router();
-router.post("/create", SanavatController.create);
-router.get("/getAll", SanavatController.getAll);
-router.get("/getByYear/:year", SanavatController.getByYear);
-router.get("/getById/:id", SanavatController.getById);
-router.patch("/update/:id", SanavatController.update);
-router.patch("/updatePrice", SanavatController.updatePrice);
-router.delete("/delete/:id", SanavatController.delete);
+router.post("/create", sanavatController.create);
+router.get("/getAll", sanavatController.getAll);
+router.get("/getByYear/:year", sanavatController.getByYear);
+router.get("/getById/:id", sanavatController.getById);
+router.patch("/update/:id", sanavatController.update);
+router.patch("/updatePrice", sanavatController.updatePrice);
+router.delete("/delete/:id", sanavatController.delete);
 module.exports = {
   SanavatRoutes: router,
 };
