@@ -2,14 +2,14 @@ const { Schema, model } = require("mongoose");
 const KargahSchema = new Schema(
   {
     title: { type: String, required: true },
-    lastName: { type: String, required: true },
-    fatherName: { type: String },
-    birthdate: { type: String },
-    nationalCode: { type: String, required: true, unique: true },
-    pasportCode: { type: String, required: true, unique: true },
-    bornCity: { type: String },
-    generateCity: { type: String },
-    sex: { type: Boolean, default: false },
+    address: { type: String, required: true },
+    phone: { type: String },
+    trustedPhone: { type: String },
+    customMessage : { type: String },
+    userName: { type: String, required: true, unique: true },
+    password: { type: String },
+    isActived: { type: Boolean, default: true },
+    komakDolat: { type: Boolean, default: false },
   },
   {
     timestamps: true,

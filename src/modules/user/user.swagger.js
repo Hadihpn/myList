@@ -48,6 +48,9 @@
  *         sex:
  *           type: boolean
  *           description: User's gender
+ *         janbaz:
+ *           type: boolean
+ *           description: User's is janbaz or not
  *     UpdateUser:
  *       type: object
  *       properties:
@@ -73,6 +76,9 @@
  *           type: string
  *           minLength: 8
  *           maxLength: 8
+ *         janbaz:
+ *           type: boolean
+ *           description: User's is janbaz or not
  *     ApiResponse:
  *       type: object
  *       properties:

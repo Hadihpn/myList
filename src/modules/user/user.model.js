@@ -11,6 +11,8 @@ const UserSchema = new Schema(
     generateCity: { type: String },
     sex: { type: Boolean, default: false },
     isMarried: { type: Boolean, default: false },
+    janbaz: { type: Boolean, default: false },
+    isForeign: { type: Boolean, default: false },
   },
   {
     timestamps: true,
