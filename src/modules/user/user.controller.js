@@ -1,6 +1,6 @@
 const autoBind = require("auto-bind");
 const { StatusCodes: httpStatus } = require("http-status-codes");
-const { UserService } = require("./user.services");
+const  UserService  = require("./user.services");
 const { createUserSchema } = require("../../common/validator/user.schema");
 const { isValidObjectId } = require("mongoose");
 class UserController {
