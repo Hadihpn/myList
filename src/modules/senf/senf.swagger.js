@@ -1,202 +1,349 @@
+
 /**
  * @swagger
  * components:
  *   schemas:
- *     PayehSanavatInput:
+ *     CreateSenf:
  *       type: object
  *       required:
- *         - year
+ *         - code
+ *         - title
  *       properties:
- *         year:
- *           type: number
- *           description: The sanavat year
- *         dailySanavat:
- *           type: number
- *           description: Price for the dailySanavat 
- *     PayehSanavatUpdateInput:
+ *         code:
+ *           type: string
+ *           description: Unique code for the Senf
+ *         title:
+ *           type: string
+ *           description: Title of the Senf
+ *           minLength: 3
+ *           maxLength: 100
+ *         jobs:
+ *           type: array
+ *           description: Array of job IDs associated with this Senf
+ *           items:
+ *             type: string
+ *     
+ *     UpdateSenf:
  *       type: object
  *       properties:
- *         year:
- *           type: number
- *           description: The sanavat year
- *         dailySanavat:
- *           type: number
- *           description: Price for the dailySanavat
- *     PriceUpdateInput:
+ *         code:
+ *           type: string
+ *           description: Unique code for the Senf
+ *         title:
+ *           type: string
+ *           description: Title of the Senf
+ *           minLength: 3
+ *           maxLength: 100
+ *         jobs:
+ *           type: array
+ *           description: Array of job IDs associated with this Senf
+ *           items:
+ *             type: string
+ *     
+ *     Senf:
  *       type: object
- *       required:
- *         - oldPrice
- *         - newPrice
  *       properties:
- *         oldPrice:
- *           type: number
- *           description: old price to set
- *         newPrice:
- *           type: number
- *           description: New price to set
-*/
+ *         _id:
+ *           type: string
+ *           description: Unique identifier for the Senf
+ *         code:
+ *           type: string
+ *           description: Unique code for the Senf
+ *         title:
+ *           type: string
+ *           description: Title of the Senf
+ *         jobs:
+ *           type: array
+ *           description: Array of jobs associated with this Senf
+ *           items:
+ *             type: object
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *           description: Date and time when the Senf was created
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
+ *           description: Date and time when the Senf was last updated
+ */
 
 /**
  * @swagger
  * tags:
- *   name: PayehSanavat
- *   description: PayehSanavat management API
+ *   name: Senf
+ *   description: Senf management API
  */
 
 /**
  * @swagger
- * /payehsanavat/create:
+ * /senf/create:
  *   post:
- *     summary: Create a new payehSanavat record
- *     tags: [PayehSanavat]
+ *     summary: Create a new Senf
+ *     tags: [Senf]
  *     requestBody:
  *       required: true
  *       content:
- *         application/x-www-form-urlencoded:
- *            schema:
- *              $ref: '#/components/schemas/PayehSanavatInput'
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/PayehSanavatInput'
+ *             $ref: '#/components/schemas/CreateSenf'
+ *         application/x-www-form-urlencoded:
+ *           schema:
+ *             $ref: '#/components/schemas/CreateSenf'
  *     responses:
  *       201:
- *         description: Successfully created payehSanavat record
+ *         description: Senf created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 statusCode:
+ *                   type: integer
+ *                   example: 201
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     senf:
+ *                       $ref: '#/components/schemas/Senf'
  *       400:
- *         description: Bad request
+ *         description: Invalid input
  *       500:
  *         description: Server error
  */
 
 /**
  * @swagger
- * /payehsanavat/getAll:
+ * /senf/getAll:
  *   get:
- *     summary: Retrieve all payehSanavat records
- *     tags: [PayehSanavat]
- *     responses:
- *       200:
- *         description: List of all payehSanavat records
- *       500:
- *         description: Server error
- */
-
-/**
- * @swagger
- * /payehsanavat/getByYear/{year}:
- *   get:
- *     summary: Get payehSanavat record by year
- *     tags: [PayehSanavat]
+ *     summary: Retrieve all Senfs
+ *     tags: [Senf]
  *     parameters:
- *       - in: path
- *         name: year
+ *       - in: query
+ *         name: code
  *         schema:
- *           type: number
- *         required: true
- *         description: Year of the payehSanavat record
+ *           type: string
+ *         description: Filter by code
+ *       - in: query
+ *         name: title
+ *         schema:
+ *           type: string
+ *         description: Filter by title
  *     responses:
  *       200:
- *         description: payehSanavat record for the specified year
- *       404:
- *         description: payehSanavat record not found
+ *         description: List of all Senfs
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 statusCode:
+ *                   type: integer
+ *                   example: 200
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     senfs:
+ *                       type: array
+ *                       items:
+ *                         $ref: '#/components/schemas/Senf'
  *       500:
  *         description: Server error
  */
 
 /**
  * @swagger
- * /payehsanavat/getById/{id}:
+ * /senf/getById/{id}:
  *   get:
- *     summary: Get payehSanavat record by ID
- *     tags: [PayehSanavat]
+ *     summary: Get Senf by ID
+ *     tags: [Senf]
  *     parameters:
  *       - in: path
  *         name: id
  *         schema:
  *           type: string
  *         required: true
- *         description: ID of the payehSanavat record
+ *         description: ID of the Senf
  *     responses:
  *       200:
- *         description: payehSanavat record for the specified ID
+ *         description: Senf data
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 statusCode:
+ *                   type: integer
+ *                   example: 200
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     senf:
+ *                       $ref: '#/components/schemas/Senf'
+ *       400:
+ *         description: Invalid ID
  *       404:
- *         description: payehSanavat record not found
+ *         description: Senf not found
  *       500:
  *         description: Server error
  */
 
 /**
  * @swagger
- * /payehsanavat/update/{id}:
+ * /senf/update/{id}:
  *   patch:
- *     summary: Update a payehSanavat record
- *     tags: [PayehSanavat]
+ *     summary: Update a Senf
+ *     tags: [Senf]
  *     parameters:
  *       - in: path
  *         name: id
  *         schema:
  *           type: string
  *         required: true
- *         description: ID of the payehSanavat record to update
+ *         description: ID of the Senf to update
  *     requestBody:
  *       required: true
  *       content:
- *         application/x-www-form-urlencoded:
- *            schema:
- *              $ref: '#/components/schemas/PayehSanavatUpdateInput' 
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/PayehSanavatUpdateInput'
- *     responses:
- *       200:
- *         description: Successfully updated payehSanavat record
- *       404:
- *         description: payehSanavat record not found
- *       500:
- *         description: Server error
- */
-
-/**
- * @swagger
- * /payehsanavat/updatePrice:
- *   patch:
- *     summary: Update price for sanavat records
- *     tags: [PayehSanavat]
- *     requestBody:
- *       required: true
- *       content:
+ *             $ref: '#/components/schemas/UpdateSenf'
  *         application/x-www-form-urlencoded:
- *            schema:
- *              $ref: '#/components/schemas/PriceUpdateInput'
- *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/PriceUpdateInput'
+ *             $ref: '#/components/schemas/UpdateSenf'
  *     responses:
  *       200:
- *         description: Successfully updated prices
+ *         description: Senf updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 statusCode:
+ *                   type: integer
+ *                   example: 200
+ *                 message:
+ *                   type: string
+ *                   example: "بروزرسانی با موفقیت انجام شد"
  *       400:
- *         description: Bad request
+ *         description: Invalid ID or input
+ *       404:
+ *         description: Senf not found
  *       500:
  *         description: Server error
  */
 
 /**
  * @swagger
- * /payehsanavat/delete/{id}:
+ * /senf/delete/{id}:
  *   delete:
- *     summary: Delete a payehSanavat record
- *     tags: [PayehSanavat]
+ *     summary: Delete a Senf
+ *     tags: [Senf]
  *     parameters:
  *       - in: path
  *         name: id
  *         schema:
  *           type: string
  *         required: true
- *         description: ID of the payehSanavat record to delete
+ *         description: ID of the Senf to delete
  *     responses:
  *       200:
- *         description: Successfully deleted payehSanavat record
+ *         description: Senf deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 statusCode:
+ *                   type: integer
+ *                   example: 200
+ *                 message:
+ *                   type: string
+ *                   example: "حذف با موفقیت انجام شد"
+ *       400:
+ *         description: Invalid ID
  *       404:
- *         description: payehSanavat record not found
+ *         description: Senf not found
+ *       500:
+ *         description: Server error
+ */
+
+/**
+ * @swagger
+ * /senf/addJob/{senfId}/{jobId}:
+ *   patch:
+ *     summary: Add a job to a Senf
+ *     tags: [Senf]
+ *     parameters:
+ *       - in: path
+ *         name: senfId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: ID of the Senf
+ *       - in: path
+ *         name: jobId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: ID of the job to add
+ *     responses:
+ *       200:
+ *         description: Job added to Senf successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 statusCode:
+ *                   type: integer
+ *                   example: 200
+ *                 message:
+ *                   type: string
+ *                   example: "شغل با موفقیت به صنف اضافه شد"
+ *       400:
+ *         description: Invalid IDs
+ *       404:
+ *         description: Senf or job not found
+ *       500:
+ *         description: Server error
+ */
+
+/**
+ * @swagger
+ * /senf/removeJob/{senfId}/{jobId}:
+ *   patch:
+ *     summary: Remove a job from a Senf
+ *     tags: [Senf]
+ *     parameters:
+ *       - in: path
+ *         name: senfId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: ID of the Senf
+ *       - in: path
+ *         name: jobId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: ID of the job to remove
+ *     responses:
+ *       200:
+ *         description: Job removed from Senf successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 statusCode:
+ *                   type: integer
+ *                   example: 200
+ *                 message:
+ *                   type: string
+ *                   example: "شغل با موفقیت از صنف حذف شد"
+ *       400:
+ *         description: Invalid IDs
+ *       404:
+ *         description: Senf or job not found
  *       500:
  *         description: Server error
  */
