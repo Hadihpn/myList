@@ -7,6 +7,7 @@ const UserSchema = new Schema(
     birthdate: { type: String },
     nationalCode: { type: String, required: true, unique: true },
     pasportCode: { type: String, required: true, unique: true },
+    bimehCode: { type: String, required: true, unique: true },
     bornCity: { type: String },
     generateCity: { type: String },
     sex: { type: Boolean, default: false },

@@ -22,12 +22,20 @@ const createUserSchema = Joi.object({
     .error(new Error("کد ملی باید 10 رقم باشد")),
   pasportCode: Joi.string()
     .required()
-    .min(8)
-    .max(8)
-    .error(new Error("کد پاسپورت باید 8 رقم باشد")),
+    .min(10)
+    .max(10)
+    .error(new Error("کد پاسپورت باید 10 رقم باشد")),
+  bimehCode: Joi.string()
+    .required()
+    .min(10)
+    .max(10)
+    .error(new Error("کد پاسپورت باید 10 رقم باشد")),
   bornCity: Joi.string().error(new Error("شهر محل تولد صحیح نیست")),
   generateCity: Joi.string().error(new Error("شهر محل صدور صحیح نیست")),
   sex: Joi.boolean().error(new Error("جنسیت صحیح نیست")),
+  isMarried: Joi.boolean().error(new Error("وضعیت تاهل صحیح نیست")),
+  janbaz: Joi.boolean().error(new Error("وضعیت جانبازی صحیح نیست")),
+  isForeign: Joi.boolean().error(new Error("وضعیت ملیت صحیح نیست")),
 });
 const updateUserSchema = Joi.object({
   firstName: Joi.string()

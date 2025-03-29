@@ -10,6 +10,7 @@
  *         - lastName
  *         - nationalCode
  *         - pasportCode
+ *         - bimehCode
  *       properties:
  *         firstName:
  *           type: string
@@ -37,8 +38,13 @@
  *         pasportCode:
  *           type: string
  *           description: User's passport code
- *           minLength: 8
- *           maxLength: 8
+ *           minLength: 10
+ *           maxLength: 10
+ *         bimehCode:
+ *           type: string
+ *           description: User's bimeh code
+ *           minLength: 10
+ *           maxLength: 10
  *         bornCity:
  *           type: string
  *           description: City where user was born
@@ -51,6 +57,9 @@
  *         janbaz:
  *           type: boolean
  *           description: User's is janbaz or not
+ *         isForeign:
+ *           type: boolean
+ *           description: User's is iranian or not
  *     UpdateUser:
  *       type: object
  *       properties:
@@ -74,11 +83,27 @@
  *           maxLength: 10
  *         pasportCode:
  *           type: string
- *           minLength: 8
- *           maxLength: 8
+ *           minLength: 10
+ *           maxLength: 10
+ *         bimehCode:
+ *           type: string
+ *           minLength: 10
+ *           maxLength: 10
+ *         bornCity:
+ *           type: string
+ *           description: City where user was born
+ *         generateCity:
+ *           type: string
+ *           description: City where documents were issued
+ *         sex:
+ *           type: boolean
+ *           description: User's gender
  *         janbaz:
  *           type: boolean
  *           description: User's is janbaz or not
+ *         isForeign:
+ *           type: boolean
+ *           description: User's is iranian or not
  *     ApiResponse:
  *       type: object
  *       properties:
@@ -98,28 +123,15 @@
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         application/x-www-form-urlencoded:
  *           schema:
  *             $ref: '#/components/schemas/CreateUser'
- *         application/x-www-form-urlencoded:
+ *         application/json:
  *           schema:
  *             $ref: '#/components/schemas/CreateUser'
  *     responses:
  *       201:
  *         description: User created successfully
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 statusCode:
- *                   type: integer
- *                   example: 201
- *                 data:
- *                   type: object
- *                   properties:
- *                     user:
- *                       $ref: '#/components/schemas/User'
  *       400:
  *         description: Invalid input
  *       500:
@@ -134,21 +146,6 @@
  *     responses:
  *       200:
  *         description: A list of users
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 statusCode:
- *                   type: integer
- *                   example: 200
- *                 data:
- *                   type: object
- *                   properties:
- *                     users:
- *                       type: array
- *                       items:
- *                         $ref: '#/components/schemas/User'
  *       500:
  *         description: Server error
  *
@@ -168,19 +165,6 @@
  *     responses:
  *       200:
  *         description: User data
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 statusCode:
- *                   type: integer
- *                   example: 200
- *                 data:
- *                   type: object
- *                   properties:
- *                     user:
- *                       $ref: '#/components/schemas/User'
  *       400:
  *         description: Invalid ID
  *       404:
@@ -204,28 +188,15 @@
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         application/x-www-form-urlencoded:
  *           schema:
  *             $ref: '#/components/schemas/UpdateUser'
- *         application/x-www-form-urlencoded:
+ *         application/json:
  *           schema:
  *             $ref: '#/components/schemas/UpdateUser'
  *     responses:
  *       200:
  *         description: User updated successfully
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 statusCode:
- *                   type: integer
- *                   example: 200
- *                 data:
- *                   type: object
- *                   properties:
- *                     user:
- *                       $ref: '#/components/schemas/User'
  *       400:
  *         description: Invalid ID or input
  *       404:
@@ -249,19 +220,6 @@
  *     responses:
  *       200:
  *         description: User deleted successfully
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 statusCode:
- *                   type: integer
- *                   example: 200
- *                 data:
- *                   type: object
- *                   properties:
- *                     user:
- *                       $ref: '#/components/schemas/User'
  *       400:
  *         description: Invalid ID
  *       404:
